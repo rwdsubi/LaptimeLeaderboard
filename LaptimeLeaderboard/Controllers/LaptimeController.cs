@@ -10,30 +10,22 @@ using Microsoft.Extensions.Configuration;
 
 namespace LaptimeLeaderboard.Api.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class LaptimeController : ControllerBase
+    [Route("api/[controller]/[action]")]
+    [Produces("application/json")]
+    public class LaptimeController : LeaderboardBaseController
     {
         private ILeaderboardRepository repo;
-        private IConfiguration cfg;
-        private readonly string apiKey;
-
-        public LaptimeController(ILeaderboardRepository repo, IConfiguration cfg)
+        public LaptimeController(ILeaderboardRepository repo, IConfiguration cfg) : base(cfg)
         {
             this.repo = repo;
-            this.cfg = cfg;
-            apiKey = cfg.GetSection("ApiKey").Value;
         }
 
-        private bool ApiKeyValid(string apiKey)
-        {
-            return apiKey == this.apiKey;
-        }
-
-        public IEnumerable<TrackDefinition> GetTracks()
+        [HttpGet]
+        public IEnumerable<TrackDefinition> GetTracks(string apiKey)
         {
             try
             {
+
                 
                 return new List<TrackDefinition>();
             }
@@ -43,6 +35,12 @@ namespace LaptimeLeaderboard.Api.Controllers
                 throw;
             }
             
+        }
+
+        [HttpGet]
+        public string GetLaptimeFile(string apiKey, string fileId)
+        {
+            return "kjdsfghd";
         }
     }
 }

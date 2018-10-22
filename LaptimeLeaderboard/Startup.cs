@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LaptimeLeaderboard.Api.Middlewares;
 using LaptimeLeaderboard.Dto;
 using LaptimeLeaderboard.Library;
 using Microsoft.AspNetCore.Builder;
@@ -27,7 +28,9 @@ namespace LaptimeLeaderboard.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc();
+            services.AddRouting();
+            services.AddSingleton(Configuration);
 
             services.Configure<MongoDbSettings>(
             options =>
@@ -38,6 +41,8 @@ namespace LaptimeLeaderboard.Api
 
             services.AddTransient<ILeaderboardContext, LeaderboardContext>();
             services.AddTransient<ILeaderboardRepository, LeaderboardRepository>();
+
+            services.AddSwaggerGen(c => c.SwaggerDoc("v1", new Swashbuckle.AspNetCore.Swagger.Info { Title = "Laptime Leaderboard", Version = "v1" }));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,8 +57,14 @@ namespace LaptimeLeaderboard.Api
                 app.UseHsts();
             }
 
+            app.UseMiddleware<ApiKeyMiddleware>();
+            app.UseMiddleware<HttpExceptionMiddleware>();
+
             app.UseHttpsRedirection();
             app.UseMvc();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(x => x.SwaggerEndpoint("/swagger/v1/swagger.json", "Laptime Leaderboard v1"));
         }
     }
 }
