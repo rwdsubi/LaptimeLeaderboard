@@ -14,7 +14,17 @@ namespace LaptimeLeaderboard.Library
         {
             var client = new MongoClient(options.Value.ConnectionString);
             _db = client.GetDatabase(options.Value.Database);
+            EnsureIndexes();
         }
+
+        private void EnsureIndexes()
+        {
+            Records.Indexes.CreateOne(Builders<LapDefinition>.IndexKeys.Ascending(x => x.TrackCode).Ascending(x => x.LapTime));
+
+            Tracks.Indexes.CreateOne(Builders<TrackDefinition>.IndexKeys.Ascending(x => x.TrackCode));
+        }
+
         public IMongoCollection<TrackDefinition> Tracks => _db.GetCollection<TrackDefinition>("Tracks");
+        public IMongoCollection<LapDefinition> Records => _db.GetCollection<LapDefinition>("Records");
     }
 }

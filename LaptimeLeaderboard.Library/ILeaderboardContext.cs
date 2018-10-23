@@ -6,5 +6,6 @@ namespace LaptimeLeaderboard.Library
     public interface ILeaderboardContext
     {
         IMongoCollection<TrackDefinition> Tracks { get; }
+        IMongoCollection<LapDefinition> Records { get; }
     }
 }

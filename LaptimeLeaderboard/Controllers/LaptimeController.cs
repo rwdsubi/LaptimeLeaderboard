@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using LaptimeLeaderboard.Dto;
 using LaptimeLeaderboard.Library;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 
@@ -40,7 +37,19 @@ namespace LaptimeLeaderboard.Api.Controllers
         [HttpGet]
         public string GetLaptimeFile(string apiKey, string fileId)
         {
-            return "kjdsfghd";
+            return string.Empty;
+        }
+
+        [HttpPost]
+        public string UploadLapTimer()
+        {
+            return string.Empty;
+        }
+
+        [HttpPost]
+        public string UploadManualLaptimeDetails(LapDefinition lapDetails)
+        {
+            return string.Empty;
         }
     }
 }
