@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace LaptimeLeaderboard.Api.Middlewares
 {
-    internal class HttpExceptionMiddleware
+    internal class ExceptionMiddleware
     {
         private readonly RequestDelegate next;
 
-        public HttpExceptionMiddleware(RequestDelegate next)
+        public ExceptionMiddleware(RequestDelegate next)
         {
             this.next = next;
         }
@@ -28,6 +28,20 @@ namespace LaptimeLeaderboard.Api.Middlewares
                 context.Response.StatusCode = httpException.StatusCode;
                 var responseFeature = context.Features.Get<IHttpResponseFeature>();
                 responseFeature.ReasonPhrase = httpException.Message;
+            }
+            catch(LeaderboardException lbexception)
+            {
+                // log exception
+                context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+                var responseFeature = context.Features.Get<IHttpResponseFeature>();
+                responseFeature.ReasonPhrase = lbexception.Message;
+            }
+            catch(Exception ex)
+            {
+                // log exception
+                context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+                var responseFeature = context.Features.Get<IHttpResponseFeature>();
+                responseFeature.ReasonPhrase = "An unexpected error occured.";
             }
         }
     }

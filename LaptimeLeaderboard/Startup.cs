@@ -41,6 +41,8 @@ namespace LaptimeLeaderboard.Api
 
             services.AddTransient<ILeaderboardContext, LeaderboardContext>();
             services.AddTransient<ILeaderboardRepository, LeaderboardRepository>();
+            services.AddTransient<ILeaderboardUploadRepository, LeaderboardUploadRepository>();
+            services.AddTransient<IAdminRepository, AdminRepository>();
 
             services.AddSwaggerGen(c => c.SwaggerDoc("v1", new Swashbuckle.AspNetCore.Swagger.Info { Title = "Laptime Leaderboard", Version = "v1" }));
         }
@@ -57,8 +59,9 @@ namespace LaptimeLeaderboard.Api
                 app.UseHsts();
             }
 
+            app.UseMiddleware<AccessLogMiddlewhere>();
+            app.UseMiddleware<ExceptionMiddleware>();
             app.UseMiddleware<ApiKeyMiddleware>();
-            app.UseMiddleware<HttpExceptionMiddleware>();
 
             app.UseHttpsRedirection();
             app.UseMvc();

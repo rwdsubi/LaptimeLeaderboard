@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Text.RegularExpressions;
 
 namespace LaptimeLeaderboard.HelperFunctions
 {
@@ -8,8 +7,8 @@ namespace LaptimeLeaderboard.HelperFunctions
     {
         public static string Get(string input)
         {
-            // TODO: finish method
-            return input;
+            Regex r = new Regex("(?:[^a-z0-9]|(?<=['\"])s)", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Compiled);
+            return r.Replace(input, String.Empty);
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace LaptimeLeaderboard.Library
 {
-    public interface ILeaderboardRepository
+    public interface IAdminRepository
     {
     }
 }

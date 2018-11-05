@@ -19,12 +19,12 @@ namespace LaptimeLeaderboard.Library
 
         private void EnsureIndexes()
         {
-            Records.Indexes.CreateOne(Builders<LapDefinition>.IndexKeys.Ascending(x => x.TrackCode).Ascending(x => x.LapTime));
+            Laptimes.Indexes.CreateOne(Builders<LapDefinition>.IndexKeys.Ascending(x => x.TrackCode).Ascending(x => x.LapTime));
 
             Tracks.Indexes.CreateOne(Builders<TrackDefinition>.IndexKeys.Ascending(x => x.TrackCode));
         }
 
         public IMongoCollection<TrackDefinition> Tracks => _db.GetCollection<TrackDefinition>("Tracks");
-        public IMongoCollection<LapDefinition> Records => _db.GetCollection<LapDefinition>("Records");
+        public IMongoCollection<LapDefinition> Laptimes => _db.GetCollection<LapDefinition>("Laptimes");
     }
 }

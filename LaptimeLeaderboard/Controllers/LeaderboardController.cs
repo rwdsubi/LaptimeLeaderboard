@@ -1,18 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using LaptimeLeaderboard.Dto;
 using LaptimeLeaderboard.Library;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 
 namespace LaptimeLeaderboard.Api.Controllers
 {
-    [Route("api/[controller]/[action]")]
-    [Produces("application/json")]
-    public class LaptimeController : LeaderboardBaseController
+    [Route("api/[controller]")]
+    [ApiController]
+    public class LeaderboardController : LeaderboardBaseController
     {
         private ILeaderboardRepository repo;
-        public LaptimeController(ILeaderboardRepository repo, IConfiguration cfg) : base(cfg)
+        public LeaderboardController(ILeaderboardRepository repo, IConfiguration cfg) : base(cfg)
         {
             this.repo = repo;
         }
@@ -23,31 +26,19 @@ namespace LaptimeLeaderboard.Api.Controllers
             try
             {
 
-                
+
                 return new List<TrackDefinition>();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 //todo: Replace with better handling
                 throw;
             }
-            
+
         }
 
         [HttpGet]
         public string GetLaptimeFile(string apiKey, string fileId)
-        {
-            return string.Empty;
-        }
-
-        [HttpPost]
-        public string UploadLapTimer()
-        {
-            return string.Empty;
-        }
-
-        [HttpPost]
-        public string UploadManualLaptimeDetails(LapDefinition lapDetails)
         {
             return string.Empty;
         }
